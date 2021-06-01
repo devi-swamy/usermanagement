@@ -1,13 +1,19 @@
 import React, { Component } from 'react';
-
+import {Route,Switch,BrowserRouter as Router} from 'react-router-dom';
 import '../styles/App.scss';
 import Login from './Login';
+import Signup from './Signup';
+import Forgot from './Forgot';
+import Navbar from './Navbar';
+
 
 export default class App extends Component {
 
   state ={
     username:"",
-    password:""
+    password:"",
+    fullname:"",
+    email:""
   }
 
   handlechange =(e)=>
@@ -17,28 +23,24 @@ export default class App extends Component {
   }
   render() {
     return (
+      <Router>
       <div className="container">
      <div class="card text-center">
-  <div className="card-header">
-    <ul className="nav nav-tabs card-header-tabs">
-      <li className="nav-item">
-        <a className="nav-link active" href="#">Login In</a>
-      </li>
-      <li className="nav-item">
-        <a className="nav-link" href="#">Sign Up</a>
-      </li>
-      <li className="nav-item">
-        <a className="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Forgot Password</a>
-      </li>
-    </ul>
-  </div>
+      <Navbar/>
   <div className="card-body">
     
+    <Switch>
+    <Router path="/signup"> <Signup  username={this.state.username} onChange={this.handlechange}/></Router>
+    <Router path="/forgot"> <Forgot  username={this.state.username} email ={this.state.email} onChange={this.handlechange}/></Router>
+      <Router path="/" exact="true"> <Login  username={this.state.username} onChange={this.handlechange}/></Router>
   
-    <Login  username={this.state.username} onChange={this.handlechange}/>
+    </Switch>
+  
+   
   </div>
 </div>
       </div>
+      </Router>
     )
   }
 }
